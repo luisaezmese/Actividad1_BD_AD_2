@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_alumno"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.luisangel.actividad1_bd_ad.Alumno"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="NOMBRE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textNombreA" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editNombreA"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:text="EDAD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textEdadA" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editEdadA" />
+
+    <TextView
+        android:text="CICLO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textClicoA" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editCicloA" />
+
+    <TextView
+        android:text="CURSO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textCursoA" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editCursoA" />
+    <TextView
+        android:text="NOTA MEDIA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textNotaA" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editNotaA" />
+
+    <Button
+        android:text="Guardar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonGuardarA" />
+
+</LinearLayout>
