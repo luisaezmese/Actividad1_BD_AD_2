@@ -81,4 +81,23 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonGuardarA" />
 
+    <TextView
+        android:text="Indica el Id del alumno a borrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewborar" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextBorrarA" />
+
+    <Button
+        android:text="Borrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonBorrarA" />
+
 </LinearLayout>
