@@ -16,9 +16,9 @@ public class Profesor extends AppCompatActivity {
     private EditText idborrar;
 
     private String nombre1;
-    private String edad1;
+    private int edad1;
     private String ciclo1;
-    private String curso1;
+    private int curso1;
     private String despacho1;
     private String idborrar1;
 
@@ -28,22 +28,6 @@ public class Profesor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profesor);
-
-        nombre = (EditText)findViewById(R.id.editNombre);
-        edad = (EditText)findViewById(R.id.editEdad);
-        ciclo = (EditText)findViewById(R.id.editCiclo);
-        curso = (EditText) findViewById(R.id.editCurso);
-        despacho = (EditText) findViewById(R.id.editDespacho);
-        idborrar = (EditText) findViewById(R.id.editTextBorrarP);
-
-        nombre1 = nombre.getText().toString();
-        edad1 = edad.getText().toString();
-        ciclo1 = ciclo.getText().toString();
-        curso1 = curso.getText().toString();
-        despacho1 = despacho.getText().toString();
-        idborrar1 = idborrar.getText().toString();
-
-
 
         Button guardarP = (Button) findViewById(R.id.buttonGuardar);
         Button borrar = (Button) findViewById(R.id.buttonBorrarP);
@@ -55,14 +39,29 @@ public class Profesor extends AppCompatActivity {
             @Override public void onClick(View v) {
 
                 dbAdapter.open();
-                dbAdapter.insertarProfesor(nombre1, edad1, ciclo1, curso1, despacho1);
+                nombre = (EditText)findViewById(R.id.editNombre);
+                nombre1 = nombre.getText().toString();
+                edad = (EditText)findViewById(R.id.editEdad);
+                edad1 = Integer.parseInt(edad.getText().toString());
+                ciclo = (EditText)findViewById(R.id.editCiclo);
+                ciclo1 = ciclo.getText().toString();
+                curso = (EditText) findViewById(R.id.editCurso);
+                curso1 = Integer.parseInt(curso.getText().toString());
+                despacho = (EditText) findViewById(R.id.editDespacho);
+                despacho1 = despacho.getText().toString();
+
+                dbAdapter.insertarProfesor(nombre1,edad1,ciclo1,curso1,despacho1);
             }
         });
 
         borrar.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
+
+                idborrar = (EditText) findViewById(R.id.editTextBorrarP);
+                idborrar1 = idborrar.getText().toString();
+
                 dbAdapter.open();
-                dbAdapter.borrarAlumno("_id="+idborrar1);
+                dbAdapter.borrarProfesor("_id="+idborrar1);
 
             }
         });

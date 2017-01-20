@@ -5,7 +5,8 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-
+import android.view.View;
+import android.widget.Toast;
 
 
 public class MyDBAdapter {
@@ -24,39 +25,37 @@ public class MyDBAdapter {
     private static final String DESPACHO = "despacho";
 
 
-    private static final String DATABASE_CREATE_A = "CREATE TABLE "+DATABASE_TABLE_A+" (_id integer primary key autoincrement, nombre text, edad text, ciclo text, curso text, nota text);";
+    private static final String DATABASE_CREATE_A = "CREATE TABLE "+DATABASE_TABLE_A+" (_id integer primary key autoincrement, nombre text, edad int, ciclo text, curso int, nota int);";
     private static final String DATABASE_DROP_A = "DROP TABLE IF EXISTS "+DATABASE_TABLE_A+";";
-    private static final String DATABASE_CREATE_P = "CREATE TABLE "+DATABASE_TABLE_P+" (_id integer primary key autoincrement, nombre text, edad text, ciclo text, curso text, despacho text);";
+    private static final String DATABASE_CREATE_P = "CREATE TABLE "+DATABASE_TABLE_P+" (_id integer primary key autoincrement, nombre text, edad int, ciclo text, curso int, despacho text);";
     private static final String DATABASE_DROP_P = "DROP TABLE IF EXISTS "+DATABASE_TABLE_P+";";
 
     // Contexto de la aplicación que usa la base de datos
     private final Context context;
     // Clase SQLiteOpenHelper para crear/actualizar la base de datos
-    private MyDbHelperA dbHelperA;
-    private MyDbHelperP dbHelperP;
+    private MyDbHelper dbHelper;
     // Instancia de la base de datos
-    private SQLiteDatabase dbA;
-    private SQLiteDatabase dbP;
+    private SQLiteDatabase db;
+
+    private MyDBAdapter dbAdapter;
 
     public MyDBAdapter (Context c){
         context = c;
-        dbHelperA = new MyDbHelperA(context, DATABASE_NAME, null, DATABASE_VERSION);
-        dbHelperP = new MyDbHelperP(context, DATABASE_NAME, null, DATABASE_VERSION);
+        dbHelper = new MyDbHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     public void open(){
 
         try{
-            dbA = dbHelperA.getWritableDatabase();
-            dbP = dbHelperP.getWritableDatabase();
+            db = dbHelper.getWritableDatabase();
+
         }catch(SQLiteException e){
-            dbA = dbHelperA.getReadableDatabase();
-            dbP = dbHelperP.getReadableDatabase();
+            db = dbHelper.getReadableDatabase();
         }
 
     }
 
-    public void insertarAlumno(String a, String b, String c, String d, String e){
+    public void insertarAlumno(String a, int b, String c, int d, int e){
         //Creamos un nuevo registro de valores a insertar
         ContentValues newValues = new ContentValues();
         //Asignamos los valores de cada campo
@@ -65,15 +64,16 @@ public class MyDBAdapter {
         newValues.put(CICLO,c);
         newValues.put(CURSO,d);
         newValues.put(NOTA,e);
-        dbA.insert(DATABASE_TABLE_A,null,newValues);
+        db.insert(DATABASE_TABLE_A,null,newValues);
+
     }
 
     public void borrarAlumno(String b){
-        dbA.delete("alumnos", b, null);
+        db.delete("alumnos", b, null);
 
     }
 
-    public void insertarProfesor(String a, String b, String c, String d, String e){
+    public void insertarProfesor(String a, int b, String c, int d, String e){
         //Creamos un nuevo registro de valores a insertar
         ContentValues newValues = new ContentValues();
         //Asignamos los valores de cada campo
@@ -82,23 +82,25 @@ public class MyDBAdapter {
         newValues.put(CICLO,c);
         newValues.put(CURSO,d);
         newValues.put(DESPACHO,e);
-        dbP.insert(DATABASE_TABLE_P,null,newValues);
+        db.insert(DATABASE_TABLE_P,null,newValues);
+
     }
 
     public void borrarProfesor(String b) {
-        dbA.delete("profesores", b, null);
+        db.delete("profesores", b, null);
     }
 
 
-    private static class MyDbHelperA extends SQLiteOpenHelper {
+    private static class MyDbHelper extends SQLiteOpenHelper {
 
-            public MyDbHelperA (Context context, String name, SQLiteDatabase.CursorFactory factory, int version){
+            public MyDbHelper (Context context, String name, SQLiteDatabase.CursorFactory factory, int version){
                 super(context,name,factory,version);
             }
 
             @Override
             public void onCreate(SQLiteDatabase db) {
                 db.execSQL(DATABASE_CREATE_A);
+                db.execSQL(DATABASE_CREATE_P);
             }
 
             @Override
@@ -109,22 +111,6 @@ public class MyDBAdapter {
 
     }
 
-    private static class MyDbHelperP extends SQLiteOpenHelper {
 
-        public MyDbHelperP (Context context, String name, SQLiteDatabase.CursorFactory factory, int version){
-            super(context,name,factory,version);
-        }
 
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DATABASE_CREATE_P);
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL(DATABASE_DROP_P);
-            onCreate(db);
-        }
-
-    }
 }
