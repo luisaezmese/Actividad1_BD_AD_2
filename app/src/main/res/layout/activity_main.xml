@@ -26,4 +26,13 @@
         android:id="@+id/button_Alumno"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="BUSCAR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/button_Alumno"
+        android:layout_marginBottom="81dp"
+        android:id="@+id/buttonBuscar" />
 </RelativeLayout>

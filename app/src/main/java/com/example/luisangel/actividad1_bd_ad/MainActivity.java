@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
 
     Button alumno;
     Button profesor;
+    Button buscar;
+    private MyDBAdapter dbAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         alumno = (Button)findViewById(R.id.button_Alumno);
         profesor = (Button)findViewById(R.id.button_Profesor);
+        buscar = (Button)findViewById(R.id.buttonBuscar);
 
         alumno.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -31,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onClick(View v) {
                 Intent profesor = new Intent (MainActivity.this, Profesor.class);
                 startActivity(profesor);
+            }
+        });
+
+        buscar.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent buscar = new Intent (MainActivity.this, Buscar.class);
+                startActivity(buscar);
             }
         });
 

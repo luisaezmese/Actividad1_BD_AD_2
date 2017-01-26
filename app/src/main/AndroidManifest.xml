@@ -16,7 +16,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".Alumno" />
-        <activity android:name=".Profesor"></activity>
+        <activity android:name=".Profesor" />
+        <activity
+            android:name=".Buscar"
+            android:label="@string/title_activity_buscar"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

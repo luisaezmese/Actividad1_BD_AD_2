@@ -2,11 +2,13 @@ package com.example.luisangel.actividad1_bd_ad;
 
 import android.content.Context;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.view.View;
-import android.widget.Toast;
+
+
+import java.util.ArrayList;
 
 
 public class MyDBAdapter {
@@ -24,11 +26,13 @@ public class MyDBAdapter {
     private static final String NOTA = "nota";
     private static final String DESPACHO = "despacho";
 
-
     private static final String DATABASE_CREATE_A = "CREATE TABLE "+DATABASE_TABLE_A+" (_id integer primary key autoincrement, nombre text, edad int, ciclo text, curso int, nota int);";
     private static final String DATABASE_DROP_A = "DROP TABLE IF EXISTS "+DATABASE_TABLE_A+";";
     private static final String DATABASE_CREATE_P = "CREATE TABLE "+DATABASE_TABLE_P+" (_id integer primary key autoincrement, nombre text, edad int, ciclo text, curso int, despacho text);";
     private static final String DATABASE_DROP_P = "DROP TABLE IF EXISTS "+DATABASE_TABLE_P+";";
+
+    private Cursor cursora;
+    private Cursor cursorp;
 
     // Contexto de la aplicación que usa la base de datos
     private final Context context;
@@ -39,11 +43,13 @@ public class MyDBAdapter {
 
     private MyDBAdapter dbAdapter;
 
+
+
+
     public MyDBAdapter (Context c){
         context = c;
         dbHelper = new MyDbHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
     public void open(){
 
         try{
@@ -53,6 +59,38 @@ public class MyDBAdapter {
             db = dbHelper.getReadableDatabase();
         }
 
+    }
+
+    public ArrayList<String> recuperar(String alumnosmarca, String profesoresmarca, String ciclo, String curso){
+        ArrayList<String> listado = new ArrayList<String>();
+
+        if ((alumnosmarca=="a") & (ciclo =="vacio") & (curso == "vacio")) {
+            //Recuperamos en un cursor la consulta realizada
+            cursora = db.query(DATABASE_TABLE_A, null, null, null, null, null, null);
+        }
+
+        if ((profesoresmarca=="a") & (ciclo == "vacio") & (curso == "vacio")) {
+            //Recuperamos en un cursor la consulta realizada
+            cursorp = db.query(DATABASE_TABLE_P, null, null, null, null, null, null);
+        }
+
+        if (profesoresmarca=="a" & alumnosmarca=="a" & (ciclo == "vacio") & (curso == "vacio")) {
+            //Recuperamos en un cursor la consulta realizada
+            cursora = db.query(DATABASE_TABLE_A, null, null, null, null, null, null);
+            cursorp = db.query(DATABASE_TABLE_P, null, null, null, null, null, null);
+        }
+        //Recorremos el cursor
+        if (cursora != null && cursora.moveToFirst()){
+            do{
+                listado.add(cursora.getString(0)+" "+cursora.getString(1));
+            }while (cursora.moveToNext());
+        }
+        if (cursorp != null && cursorp.moveToFirst()){
+            do{
+                listado.add(cursorp.getString(0)+" "+cursorp.getString(1));
+            }while (cursorp.moveToNext());
+        }
+        return listado;
     }
 
     public void insertarAlumno(String a, int b, String c, int d, int e){
@@ -106,6 +144,7 @@ public class MyDBAdapter {
             @Override
             public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
                 db.execSQL(DATABASE_DROP_A);
+                db.execSQL(DATABASE_DROP_P);
                 onCreate(db);
             }
 
